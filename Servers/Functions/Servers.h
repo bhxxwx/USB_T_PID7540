@@ -12,21 +12,10 @@
 
 
 
-
-
-bool iscontants(char *str, char *cmd);
-void send_cmd(char *str);
-bool check_receives(uint8_t cmd_number, char *cmd);
-void BC28_RESET();
-void BC28_Init();
-void pack_to_aliyun();
-
-void writeUTC(char *time, char *data);
-void writeL(char *lan, char *data);
-void clearStr(char *str, uint8_t i);
-
-void anaGPS();
-
-uint8_t get_pack_currentPack(CanRxMsg CANRX);
+void Get_USB_Message(unsigned char* buffer);
+void Control_light_device(char addh, char addl, char mode, char uart);
+void Control_Scenes_device(char scence_num, char uart);
+void Control_Curtain_device(char addh, char addl, char mode,char uart);
+void Control_Music_device(char addh, char addl, char mode, char uart);
 
 #endif /* SERVERS_H_ */
