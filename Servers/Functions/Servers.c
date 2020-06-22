@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include <stddef.h>
 
-
 char begin_status = 0;				//variable for UART
 char end_status = 0;
 int i = 0;
@@ -166,6 +165,8 @@ void Control_light_device(char addh, char addl, char mode, char uart)
 	IWDG_Feed();
 	char Cumulative_sum = 0x55 + 0x55 + 0x08 + 0x01 + 0x30 + 0x41 + 0x01 + addh + addl + mode;
 	digitalWriteA(GPIO_Pin_1, HIGH);
+	digitalWriteA(GPIO_Pin_8, HIGH);
+	digitalWriteC(GPIO_Pin_4, HIGH);
 	delay_us(1500);
 	if (uart == 0x01)
 	{
@@ -275,7 +276,9 @@ void Control_light_device(char addh, char addl, char mode, char uart)
 	}
 
 	delay_us(1500);
-	digitalWriteA(GPIO_Pin_1, LOW);	//485ģ�����ý���ģʽ
+	digitalWriteA(GPIO_Pin_1, LOW);
+	digitalWriteA(GPIO_Pin_8, LOW);
+	digitalWriteC(GPIO_Pin_4, LOW);
 }
 
 /* *********************************************
@@ -291,6 +294,8 @@ void Control_Scenes_device(char scence_num, char uart)
 	IWDG_Feed();
 	char Cumulative_sum = 0x55 + 0x55 + 0x06 + 0x01 + 0x30 + 0x40 + 0x00 + scence_num;
 	digitalWriteA(GPIO_Pin_1, HIGH);
+	digitalWriteA(GPIO_Pin_8, HIGH);
+	digitalWriteC(GPIO_Pin_4, HIGH);
 	delay_us(1500);
 
 	if (uart == 0x01)
@@ -384,6 +389,8 @@ void Control_Scenes_device(char scence_num, char uart)
 
 	delay_us(1500);
 	digitalWriteA(GPIO_Pin_1, LOW);
+	digitalWriteA(GPIO_Pin_8, LOW);
+	digitalWriteC(GPIO_Pin_4, LOW);
 }
 /* *********************************************
  * name:Control_Curtain_device
@@ -400,6 +407,8 @@ void Control_Curtain_device(char addh, char addl, char mode, char uart)
 	IWDG_Feed();
 	char Cumulative_sum = 0x55 + 0x55 + 0x08 + 0x01 + 0x30 + 0x43 + 0x03 + addh + addl + mode;
 	digitalWriteA(GPIO_Pin_1, HIGH);
+	digitalWriteA(GPIO_Pin_8, HIGH);
+	digitalWriteC(GPIO_Pin_4, HIGH);
 	delay_us(1500);
 
 	if (uart == 0x01)
@@ -510,7 +519,9 @@ void Control_Curtain_device(char addh, char addl, char mode, char uart)
 	}
 
 	delay_us(1500);
-	digitalWriteA(GPIO_Pin_1, LOW);	//485ģ�����ý���ģʽ
+	digitalWriteA(GPIO_Pin_1, LOW);
+	digitalWriteA(GPIO_Pin_8, LOW);
+	digitalWriteC(GPIO_Pin_4, LOW);
 }
 /* *********************************************
  * name:Control_Music_device
@@ -527,6 +538,8 @@ void Control_Music_device(char addh, char addl, char mode, char uart)
 	IWDG_Feed();
 	char Cumulative_sum = 0x55 + 0x55 + 0x08 + 0x01 + 0x30 + 0x44 + 0x04 + addh + addl + mode;
 	digitalWriteA(GPIO_Pin_1, HIGH);
+	digitalWriteA(GPIO_Pin_8, HIGH);
+	digitalWriteC(GPIO_Pin_4, HIGH);
 	delay_us(1500);
 
 	if (uart == 0x01)
@@ -637,22 +650,8 @@ void Control_Music_device(char addh, char addl, char mode, char uart)
 	}
 
 	delay_us(1500);
-	digitalWriteA(GPIO_Pin_1, LOW);	//485ģ�����ý���ģʽ
+	digitalWriteA(GPIO_Pin_1, LOW);
+	digitalWriteA(GPIO_Pin_8, LOW);
+	digitalWriteC(GPIO_Pin_4, LOW);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
