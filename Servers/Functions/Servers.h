@@ -19,6 +19,6 @@ void Control_Curtain_device(char addh, char addl, char mode,char uart);
 void Control_Music_device(char addh, char addl, char mode, char uart);
 void Deal_port_1();
 void Deal_port_2();
-
+void Deal_port_3();
 
 #endif /* SERVERS_H_ */

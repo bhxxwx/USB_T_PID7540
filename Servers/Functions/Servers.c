@@ -358,6 +358,15 @@ void Control_Scenes_device(char scence_num, char uart)
 		while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET)
 			;
 		USART_SendData(USART1, Cumulative_sum);
+
+		/* USB返回消息 */
+		char temp[9] = { 0x55, 0x55, 0x01, 0x00, 0x00, 0x00, 0x00, 0x0D, 0x0A };
+		int i = 0, j;
+		temp[5] = scence_num;
+		for (j = 0; j < 9; j++)
+		{
+			USB_printf("%c", temp[j]);
+		}
 	} else if (uart == 0x02)
 	{
 		while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET)
@@ -387,6 +396,15 @@ void Control_Scenes_device(char scence_num, char uart)
 		while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET)
 			;
 		USART_SendData(USART2, Cumulative_sum);
+
+		/* USB返回消息 */
+		char temp[9] = { 0x55, 0x55, 0x02, 0x00, 0x00, 0x00, 0x00, 0x0D, 0x0A };
+		int i = 0, j;
+		temp[5] = scence_num;
+		for (j = 0; j < 9; j++)
+		{
+			USB_printf("%c", temp[j]);
+		}
 	} else if (uart == 0x03)
 	{
 		while (USART_GetFlagStatus(USART3, USART_FLAG_TC) == RESET)
@@ -416,6 +434,15 @@ void Control_Scenes_device(char scence_num, char uart)
 		while (USART_GetFlagStatus(USART3, USART_FLAG_TC) == RESET)
 			;
 		USART_SendData(USART3, Cumulative_sum);
+
+		/* USB返回消息 */
+		char temp[9] = { 0x55, 0x55, 0x03, 0x00, 0x00, 0x00, 0x00, 0x0D, 0x0A };
+		int i = 0, j;
+		temp[5] = scence_num;
+		for (j = 0; j < 9; j++)
+		{
+			USB_printf("%c", temp[j]);
+		}
 	}
 
 	delay_us(1500);
@@ -685,7 +712,6 @@ void Control_Music_device(char addh, char addl, char mode, char uart)
 	digitalWriteA(GPIO_Pin_8, LOW);
 	digitalWriteC(GPIO_Pin_4, LOW);
 }
-
 
 void Deal_port_1()											//别墅一楼(设备号0x01，串口1)
 {

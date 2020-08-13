@@ -144,6 +144,9 @@ int main(void)
 			DeviceControlMessage.status = 0x00;					//Mark bit cleared
 		}
 
+		Deal_port_1();
+		Deal_port_2();
+		Deal_port_3();
 		//		len = USB_RxRead(buf, sizeof(buf));
 		//		if(len>0)
 		//		{
