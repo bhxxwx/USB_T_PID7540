@@ -13,6 +13,37 @@ char end_status = 0;
 int i = 0;
 extern DeviceControl DeviceControlMessage;
 
+#define port_receive_num 15												//定义每一个串口缓冲区条数
+#define port_receive_size 13											//定义每一个串口缓冲区的大小
+
+char port_receive_1[port_receive_num][port_receive_size];
+int port_1_read = 0;														//串口1读指针
+int port_1_write = 0;														//串口1写指针
+char port_receive_2[port_receive_num][port_receive_size];
+int port_2_read = 0;
+int port_2_write = 0;
+char port_receive_3[port_receive_num][port_receive_size];
+int port_3_read = 0;
+int port_3_write = 0;
+
+//variable for UART_1
+int messagr_len_1 = 0;												//串口中断使用(0场景模式:9位 , 1其他模式:11位)
+int order_message_1 = 0;														//标记位，1表示下一位为模式位
+char begin_status_1 = 0;
+int i_1 = 0;
+
+//variable for UART_2
+int messagr_len_2 = 0;												//串口中断使用(0场景模式:9位 , 1其他模式:11位)
+int order_message_2 = 0;														//标记位，1表示下一位为模式位
+char begin_status_2 = 0;
+int i_2 = 0;
+
+//variable for UART_3
+int messagr_len_3 = 0;												//串口中断使用(0场景模式:9位 , 1其他模式:11位)
+int order_message_3 = 0;														//标记位，1表示下一位为模式位
+char begin_status_3 = 0;
+int i_3 = 0;
+
 /* *********************************************
  * name:Get_USB_Message
  * function: USB receive control messages
@@ -655,3 +686,108 @@ void Control_Music_device(char addh, char addl, char mode, char uart)
 	digitalWriteC(GPIO_Pin_4, LOW);
 }
 
+
+void Deal_port_1()											//别墅一楼(设备号0x01，串口1)
+{
+	if (port_1_write != port_1_read)
+	{
+		char temp[9] = { 0x55, 0x55, 0x01, 0x00, 0x00, 0x00, 0x00, 0x0D, 0x0A };
+		int i = 0, j;
+		if (port_receive_1[port_1_read][2] == 0x08)			//其他模式
+		{
+			temp[3] = 0xFF;
+			temp[4] = port_receive_1[port_1_read][7];
+			temp[5] = port_receive_1[port_1_read][8];
+			temp[6] = port_receive_1[port_1_read][9];
+		} else												//场景模式
+		{
+			temp[5] = port_receive_1[port_1_read][7];
+		}
+		for (j = 0; j < 9; j++)
+		{
+			USB_printf("%c", temp[j]);
+		}
+		for (j = 0; j < port_receive_size; j++)
+		{
+			port_receive_1[port_1_read][j] = 0x00;
+		}
+		port_1_read++;
+		if (port_1_read == port_receive_num)
+		{
+			port_1_read = 0;
+		}
+	} else
+	{
+		return;
+	}
+}
+
+void Deal_port_2()											//别墅二楼(设备号0x02,串口2)
+{
+	if (port_2_write != port_2_read)
+	{
+		char temp[9] = { 0x55, 0x55, 0x02, 0x00, 0x00, 0x00, 0x00, 0x0D, 0x0A };
+		int i = 0, j;
+		if (port_receive_2[port_2_read][2] == 0x08)			//其他模式
+		{
+			temp[3] = 0xFF;
+			temp[4] = port_receive_2[port_2_read][7];
+			temp[5] = port_receive_2[port_2_read][8];
+			temp[6] = port_receive_2[port_2_read][9];
+		} else												//场景模式
+		{
+			temp[5] = port_receive_2[port_2_read][7];
+		}
+		for (j = 0; j < 9; j++)
+		{
+			USB_printf("%c", temp[j]);
+		}
+		for (j = 0; j < port_receive_size; j++)
+		{
+			port_receive_2[port_2_read][j] = 0x00;
+		}
+		port_2_read++;
+		if (port_2_read == port_receive_num)
+		{
+			port_2_read = 0;
+		}
+	} else
+	{
+		return;
+	}
+}
+
+void Deal_port_3()											//别墅三楼(设备号0x03,串口3)
+{
+	if (port_3_write != port_3_read)
+	{
+		char temp[9] = { 0x55, 0x55, 0x03, 0x00, 0x00, 0x00, 0x00, 0x0D, 0x0A };
+		int i = 0, j;
+		if (port_receive_3[port_3_read][2] == 0x08)			//其他模式
+		{
+			temp[3] = 0xFF;
+			temp[4] = port_receive_3[port_3_read][7];
+			temp[5] = port_receive_3[port_3_read][8];
+			temp[6] = port_receive_3[port_3_read][9];
+		} else												//场景模式
+		{
+			temp[5] = port_receive_3[port_3_read][7];
+		}
+		for (j = 0; j < 9; j++)
+		{
+			USB_printf("%c", temp[j]);
+		}
+		for (j = 0; j < port_receive_size; j++)
+		{
+			port_receive_3[port_3_read][j] = 0x00;
+		}
+		port_3_read++;
+		if (port_3_read == port_receive_num)
+		{
+			port_3_read = 0;
+		}
+	} else
+	{
+		return;
+	}
+}
